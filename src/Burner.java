@@ -2,16 +2,19 @@
 
 public class Burner {
 
+	//constructor 
 	public Burner() {
 		super();
 		temp = Temperature.COLD;
 		setting = Setting.OFF;
 	}
 	
+	//temp getter
 	public Temperature getTemp() {
 		return temp;
 	}
 	
+	//increase setting of burner
 	public void increaseSetting () {
 		switch(setting) {
 		case OFF:
@@ -32,6 +35,7 @@ public class Burner {
 		}
 	}
 	
+	//decrease setting of burner
 	public void decreaseSetting () {
 		switch(setting) {
 		case OFF:
@@ -52,28 +56,36 @@ public class Burner {
 		}
 	}
 	
+	//update temperature based on timer
 	public void updateTemperature () {
-		timer--;
-		if (timer == 0) {
-			switch(this.setting) {
-				case OFF:
-					temp = Temperature.COLD;
-					break;
-				case LOW:
-				case MEDIUM:
-					temp = Temperature.WARM;
-					break;
-				case HIGH:
-					temp = Temperature.HOT;
-					break;
+		//only decrement timer if it is greater than 0
+		if (timer > 0) 
+			timer--;
+		//when timer is zero update temp
+		else {
+			if (timer == 0) {
+				switch(this.setting) {
+					case OFF:
+						temp = Temperature.COLD;
+						break;
+					case LOW:
+					case MEDIUM:
+						temp = Temperature.WARM;
+						break;
+					case HIGH:
+						temp = Temperature.HOT;
+						break;
+				}
 			}
 		}
 	}
 	
+	//display setting of stove 
 	public String display () {
 		return "[" + setting.toString() + "]";
 	}
 	
+	//instance variables 
 	public enum Temperature {HOT, WARM, COLD};
 	private Temperature temp;
 	private Setting setting;
