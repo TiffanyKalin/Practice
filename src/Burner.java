@@ -1,34 +1,29 @@
 
 
 public class Burner {
+
 	public Burner() {
 		super();
 		temp = Temperature.COLD;
 		setting = Setting.OFF;
 	}
-
-	public enum Temperature {HOT, WARM, COLD};
-	private Temperature temp;
-	private Setting setting;
-	private int timer;
-	private static final int TIME_DURATION = 2;
 	
 	public Temperature getTemp() {
 		return temp;
 	}
 	
 	public void increaseSetting () {
-		switch(this.setting) {
+		switch(setting) {
 		case OFF:
-			this.setting = Setting.LOW;
+			setting = Setting.LOW;
 			timer += TIME_DURATION;
 			break;
 		case LOW:
-			this.setting = Setting.MEDIUM;
+			setting = Setting.MEDIUM;
 			timer += TIME_DURATION;
 			break;
 		case MEDIUM:
-			this.setting = Setting.HIGH;
+			setting = Setting.HIGH;
 			timer += TIME_DURATION;
 			break;
 		case HIGH:
@@ -38,31 +33,51 @@ public class Burner {
 	}
 	
 	public void decreaseSetting () {
-		switch(this.setting) {
+		switch(setting) {
 		case OFF:
 			System.out.println("Burner already off");
 			break;
 		case LOW:
-			this.setting = Setting.OFF;
+			setting = Setting.OFF;
 			timer += TIME_DURATION;
 			break;
 		case MEDIUM:
-			this.setting = Setting.LOW;
+			setting = Setting.LOW;
 			timer += TIME_DURATION;
 			break;
 		case HIGH:
-			this.setting = Setting.MEDIUM;
+			setting = Setting.MEDIUM;
 			timer += TIME_DURATION;
 			break;
 		}
 	}
 	
 	public void updateTemperature () {
-		System.out.println("hi git");
+		timer--;
+		if (timer == 0) {
+			switch(this.setting) {
+				case OFF:
+					temp = Temperature.COLD;
+					break;
+				case LOW:
+				case MEDIUM:
+					temp = Temperature.WARM;
+					break;
+				case HIGH:
+					temp = Temperature.HOT;
+					break;
+			}
+		}
 	}
 	
-	public void display () {
-		
+	public String display () {
+		return "[" + setting.toString() + "]";
 	}
+	
+	public enum Temperature {HOT, WARM, COLD};
+	private Temperature temp;
+	private Setting setting;
+	private int timer = 0;
+	private static final int TIME_DURATION = 2;
 	
 }
