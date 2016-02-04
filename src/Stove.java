@@ -37,6 +37,14 @@ public class Stove {
 			}
 		}
 		
+		//logic to displaying hot burner message 
+		for (Burner b: burners) {
+			if (b.getTemp() == Burner.Temperature.HOT) {
+				System.out.println("RED LIGHT - HOT BURNER ALERT");
+				break;
+			}
+		}
+		
 		//endline
 		System.out.println("");
 	}
@@ -89,10 +97,15 @@ public class Stove {
 	
 	//function to pass time and update temp
 	public void timePassing (int iterations) {
-		for (int i = 0; i < iterations; i++) {
+		
+		//loop to keep go through iterations; goes through seven to ensure the timer goes down to 0
+		for (int i = 1; i <= iterations + 1; i++) {
+			//updates every burner
 			for (Burner b : burners)
 				b.updateTemperature();
 		}
+		
+		//display stove
 		displayStove();
 	}
 	
